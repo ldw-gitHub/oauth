@@ -43,15 +43,13 @@ public class BaseClientDetailService implements ClientDetailsService {
 
 	@Override
 	public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-		System.out.println("clientId ================================================= " + clientId);
+		log.info("clientId ================================================= " + clientId);
 		BaseClientDetails client = null;
 		// 这里可以改为查询数据库
 		if ("client_password".equals(clientId)) {
-			log.info(clientId);
 			client = new BaseClientDetails();
 			client.setClientId(propertyService.getProperty("spring.security.oauth.resource.client.id"));
 			String secret = passwordEncoder().encode(propertyService.getProperty("spring.security.oauth.resource.client.secret"));
-			System.out.println("secret ================================================= " + secret);
 			client.setClientSecret(secret);
 			/**
 			 * Authorization Code：用验证获取code，再用code去获取token（用的最多的方式，也是最安全的方式）
@@ -71,6 +69,8 @@ public class BaseClientDetailService implements ClientDetailsService {
 			// uris.add("http://localhost/login");
 			uris.add("http://www.baidu.com");
 			client.setRegisteredRedirectUri(uris);
+			
+			
 		}
 		if (client == null) {
 			throw new NoSuchClientException("No client width requested id: " + clientId);
