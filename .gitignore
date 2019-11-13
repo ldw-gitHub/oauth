@@ -1,0 +1,14 @@
+# Editor directories and files
+.idea/
+.MF
+**/target/
+.settings/
+.classpath
+.project
+bin/
+.metadata/
+.recommenders
+Servers/
+*.iml
+.idea/
+*.log
