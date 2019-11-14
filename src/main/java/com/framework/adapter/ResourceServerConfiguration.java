@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -27,7 +26,7 @@ import com.framework.service.PropertyService;
  */
 @Configuration
 @EnableResourceServer
-@Order(3)
+@Order(1)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
 	@Autowired
@@ -64,10 +63,22 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		// 对 api/ 请求进行拦截
 //	     http.authorizeRequests().antMatchers("/api/**").authenticated();
 	     
-	     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-		     .and().authorizeRequests()
-		     .antMatchers("/api/**").authenticated();//配置api访问控制，必须认证过后才可以访问
-
+//	     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//		     .and().authorizeRequests()
+//		     .antMatchers("/api/**").authenticated()
+//			 .and().formLogin()// 使用 spring security 默认登录页面
+//		     .and().httpBasic();
+		
+		http.antMatcher("/api/**")
+		    .authorizeRequests()
+		    .antMatchers("/oauth/**").permitAll()
+		    .anyRequest().authenticated();
+	     
+	     /**
+	      * antMatcher()
+	      * 
+	      * authorizeRequests().antMatchers()
+	      */
 
 
 	}

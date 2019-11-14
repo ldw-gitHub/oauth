@@ -12,10 +12,15 @@ public class PageController {
 	public String getLoginPage() {
 		return "login";
 	}
-	@RequestMapping(value = {"","/","/index"},method = RequestMethod.GET)
+	@RequestMapping(value = {"","/","/index"},method = RequestMethod.POST)
 	public String getIndexPage(ModelAndView view,String code) {
 		view.addObject("name", "ldw");
 		view.addObject("code", code);
+		return "index";
+	}
+	
+	@RequestMapping(value = "/indexs")
+	public String getIndexsPage() {
 		return "index";
 	}
 	

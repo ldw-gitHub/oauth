@@ -59,7 +59,8 @@ public class BaseClientDetailService implements ClientDetailsService {
 			client.setAuthorizedGrantTypes(
 					Arrays.asList("authorization_code", "client_credentials", "refresh_token", "password", "implicit"));
 			// 不同的client可以通过 一个scope 对应 权限集
-			client.setScope(Arrays.asList("all", "select"));
+			client.setScope(Arrays.asList("all"));
+//			client.setScope(Arrays.asList("all", "select"));
 			client.setAuthorities(AuthorityUtils.createAuthorityList("admin_role"));
 			client.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1)); // 1天
 			client.setRefreshTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1)); // 1天
@@ -70,6 +71,7 @@ public class BaseClientDetailService implements ClientDetailsService {
 			uris.add("http://www.baidu.com");
 			client.setRegisteredRedirectUri(uris);
 			
+			client.setAutoApproveScopes(Arrays.asList("all"));
 			
 		}
 		if (client == null) {
